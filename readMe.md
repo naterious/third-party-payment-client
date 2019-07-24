@@ -48,7 +48,6 @@ listPayments: () => ({
     created: Date,
     updated: Date,
   }[] | Error);
-
 ```
 
 ### createPayment
