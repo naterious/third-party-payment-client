@@ -1,0 +1,53 @@
+{
+  "name": "third-party-payment-client",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "yarn lint:ts && yarn lint:test",
+    "lint:ts": "eslint -c ./eslint-config/index.js 'src/**/*.ts' --ignore-pattern 'src/**/*.test.ts'",
+    "lint:ts:fix": "yarn lint:ts --fix",
+    "lint:test": "eslint -c ./eslint-config/tests.js 'src/**/*.test.ts'",
+    "lint:test:fix": "yarn lint:test --fix",
+    "test": "mocha -r ts-node/register src/**/*.test.ts",
+    "build": "tsc",
+    "setup": "yarn && yarn build && yalc publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "the repositories url"
+  },
+  "author": "Nathan Taylor <nathantaylor49@gmail.com>",
+  "license": "N/A",
+  "files": [
+    "dist/**/*"
+  ],
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "@types/ramda": "^0.26.17",
+    "@types/request-promise": "^4.1.44",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
+    "chai": "^4.2.0",
+    "eslint": "^6.1.0",
+    "eslint-import-resolver-typescript": "^1.1.1",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "mocha": "^6.2.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "es6-error": "^4.1.1",
+    "fluture": "^11.0.2",
+    "ramda": "^0.26.1",
+    "url": "^0.11.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "mocha": true
+    }
+  }
+}
