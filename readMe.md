@@ -103,7 +103,7 @@ cancelPayment: (id: string) => Promise<string | Error>;
 ```
 
 ## Errors
-If the function fails, an error will be returned, please see below errors
+If the function fails, one of the below errors will be returned
 
 | Code | Error                     | Example                                                                             |
 |------|---------------------------|-------------------------------------------------------------------------------------|
