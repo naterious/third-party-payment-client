@@ -7,56 +7,25 @@ import {
   UnauthorizedRequestError,
   TokenExpiredError,
   RequestTimeoutError,
+  PaymentStatusError,
   ServerError,
-} from '../errors/errorsClass';
+} from '../src/errors/errorsClass';
 
-import createPayment from '../methods/createPayment';
+import approvePayment from '../src/methods/approvePayment';
 
-describe('createPayment', () => {
+describe('approvePayment', () => {
 
   context('when the request is successful', () => {
-    const apiRequestMock = createApiRequestMock({
-      id: 'id',
-      payeeId: 'id',
-      payerId: 'id',
-      paymentSystem: 'system',
-      paymentMethod: 'method',
-      amount: 100,
-      currency: 'USD',
-      status: 'string',
-      comment: 'no comment',
-      created: new Date(),
-      updated: new Date(),
-    });
-    it('should return the created payment details', () => {
-      return createPayment(apiRequestMock)({
-        payeeId: 'id',
-        payerId: 'id',
-        paymentSystem: 'system',
-        paymentMethod: 'method',
-        amount: 100,
-        currency: 'USD',
-        comment: 'no comment',
-      })
+    const apiRequestMock = createApiRequestMock({});
+    it('should return OK', () => {
+      return approvePayment(apiRequestMock)('paymentId')
         .then((result) => {
-          expect(result).to.have.keys(
-            'id',
-            'payeeId',
-            'payerId',
-            'paymentSystem',
-            'paymentMethod',
-            'amount',
-            'currency',
-            'status',
-            'comment',
-            'created',
-            'updated'
-          );
+          expect(result).to.equal('OK');
         });
     });
   });
 
-  context('when no payment information is provided', () => {
+  context('when no payment id is provided', () => {
     const apiRequestMock = createApiRequestMock(
       {},
       {
@@ -66,7 +35,7 @@ describe('createPayment', () => {
     );
     it('should return an error of RequestValidationError', () => {
       // @ts-ignore
-      return createPayment(apiRequestMock)()
+      return approvePayment(apiRequestMock)()
         .catch((error: RequestValidationError) => {
           expect(r.is(RequestValidationError, error)).to.equal(true);
         });
@@ -82,15 +51,7 @@ describe('createPayment', () => {
       }
     );
     it('should return an error of UnauthorizedRequestError', () => {
-      return createPayment(apiRequestMock)({
-        payeeId: 'id',
-        payerId: 'id',
-        paymentSystem: 'system',
-        paymentMethod: 'method',
-        amount: 100,
-        currency: 'USD',
-        comment: 'no comment',
-      })
+      return approvePayment(apiRequestMock)('paymentId')
         .catch((error: UnauthorizedRequestError) => {
           expect(r.is(UnauthorizedRequestError, error)).to.equal(true);
         });
@@ -106,15 +67,7 @@ describe('createPayment', () => {
       }
     );
     it('should return an error of TokenExpiredError', () => {
-      return createPayment(apiRequestMock)({
-        payeeId: 'id',
-        payerId: 'id',
-        paymentSystem: 'system',
-        paymentMethod: 'method',
-        amount: 100,
-        currency: 'USD',
-        comment: 'no comment',
-      })
+      return approvePayment(apiRequestMock)('paymentId')
         .catch((error: TokenExpiredError) => {
           expect(r.is(TokenExpiredError, error)).to.equal(true);
         });
@@ -130,17 +83,25 @@ describe('createPayment', () => {
       }
     );
     it('should return an error of RequestTimeoutError', () => {
-      return createPayment(apiRequestMock)({
-        payeeId: 'id',
-        payerId: 'id',
-        paymentSystem: 'system',
-        paymentMethod: 'method',
-        amount: 100,
-        currency: 'USD',
-        comment: 'no comment',
-      })
+      return approvePayment(apiRequestMock)('paymentId')
         .catch((error: RequestTimeoutError) => {
           expect(r.is(RequestTimeoutError, error)).to.equal(true);
+        });
+    });
+  });
+
+  context('when the payment cannnot be updated', () => {
+    const apiRequestMock = createApiRequestMock(
+      {},
+      {
+        code: 409,
+        message: 'payment cannnot be updated',
+      }
+    );
+    it('should return an error of PaymentStatusError', () => {
+      return approvePayment(apiRequestMock)('paymentId')
+        .catch((error: PaymentStatusError) => {
+          expect(r.is(PaymentStatusError, error)).to.equal(true);
         });
     });
   });
@@ -154,15 +115,7 @@ describe('createPayment', () => {
       }
     );
     it('should return an error of ServerError', () => {
-      return createPayment(apiRequestMock)({
-        payeeId: 'id',
-        payerId: 'id',
-        paymentSystem: 'system',
-        paymentMethod: 'method',
-        amount: 100,
-        currency: 'USD',
-        comment: 'no comment',
-      })
+      return approvePayment(apiRequestMock)('paymentId')
         .catch((error: ServerError) => {
           expect(r.is(ServerError, error)).to.equal(true);
         });

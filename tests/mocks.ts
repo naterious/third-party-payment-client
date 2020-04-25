@@ -1,6 +1,6 @@
 import * as r from 'ramda';
 
-import getError from '../errors/getError';
+import getError from '../src/errors/getError';
 
 export const createApiRequestMock = (
   value: object,

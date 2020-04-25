@@ -6,9 +6,9 @@ import {
   RequestValidationError,
   RequestTimeoutError,
   ServerError,
-} from '../errors/errorsClass';
+} from '../src/errors/errorsClass';
 
-import authenticate from '../methods/authenticate';
+import authenticate from '../src/methods/authenticate';
 
 describe('authenticate', () => {
 

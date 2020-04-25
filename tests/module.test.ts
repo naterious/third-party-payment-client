@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import createThirdPartyPaymentClient from '../../dist/index';
+import createThirdPartyPaymentClient from '../dist/index';
 
 describe('module initilization', () => {
 
