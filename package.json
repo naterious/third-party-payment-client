@@ -21,7 +21,7 @@
     "setup": "yarn && yarn build && yalc publish"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "es6-error": "^4.1.1",
     "ramda": "^0.27.0",
     "url": "^0.11.0"
